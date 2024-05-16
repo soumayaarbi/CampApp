@@ -1,11 +1,16 @@
-export interface Reservation {
-  id: number;
-  dateArrivee: Date;
-  dateSortie: Date;
-  nbrPersonne: number;
-  lieux: string;
-  idHebergement: number;
-  idEquipement: number;
-  idCentre: number;
-  idUtilisateur: number;
+
+export class Reservation {
+  
+  constructor(
+      public idReservation?: number,
+  public dateArrivee?: Date,
+  public dateSortie?: Date,
+ public nbrPersonne?: number,
+  public lieux?: string,
+  public idHebergement?: number,
+  public idEquipement?: number,
+  public idCentre?: number
+  
+  ){}
+
 }

@@ -1,1 +1,38 @@
-<p>reservation works!</p>
+<div class="reservation-header">
+  <h2 class="reservation-title">Liste des réservations</h2>
+  <br>
+  <br>
+  <br>
+  <button class="add-button" (click)="addReservation()" >Ajouter</button>
+  
+  
+  
+</div>
+
+<table class="reservation-table" *ngIf="reservations.length > 0; else noReservations">
+  <thead>
+    <tr>
+      <th>Date d'arrivée</th>
+      <th>Date de sortie</th>
+      <th>Nombre de personnes</th>
+      <th>Lieu</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let reservation of reservations" class="reservation-row">
+      <td>{{ reservation.dateArrivee | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ reservation.dateSortie | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ reservation.nbrPersonne }}</td>
+      <td>{{ reservation.lieux }}</td>
+      <td>
+        <button class="edit-button" >Modifier</button>
+        <button class="cancel-button" >Annuler</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noReservations>
+  <p class="no-reservations">Aucune réservation trouvée.</p>
+</ng-template>

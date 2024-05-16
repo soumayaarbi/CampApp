@@ -53,7 +53,7 @@ public class Reservation implements Serializable {
         return dateArrivee;
     }
 
-    public void setDate_arivee(Date dateArrivee) {
+    public void setDateArivee(Date dateArrivee) {
         this.dateArrivee = dateArrivee;
     }
 
@@ -61,7 +61,7 @@ public class Reservation implements Serializable {
         return dateSortie;
     }
 
-    public void setDate_sortie(Date dateSortie) {
+    public void setDateSortie(Date dateSortie) {
         this.dateSortie = dateSortie;
     }
 

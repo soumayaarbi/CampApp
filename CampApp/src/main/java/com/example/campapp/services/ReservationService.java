@@ -29,8 +29,8 @@ public class ReservationService {
     public Reservation createReservation(Date dateArrivee, Date dateSortie, int nbrPersonne, String lieux,
                                          Long idHebergement, Long idEquipement, Long idCentre, Long idUtilisateur) {
         Reservation reservation = new Reservation();
-        reservation.setDate_arivee(dateArrivee);
-        reservation.setDate_sortie(dateSortie);
+        reservation.setDateArivee(dateArrivee);
+        reservation.setDateSortie(dateSortie);
         reservation.setNbrPersonne(nbrPersonne);
         reservation.setLieux(lieux);
 
@@ -84,8 +84,8 @@ public class ReservationService {
             return null;
         }
 
-        reservation.setDate_arivee(dateArrivee);
-        reservation.setDate_sortie(dateSortie);
+        reservation.setDateArivee(dateArrivee);
+        reservation. setDateSortie(dateSortie);
         reservation.setNbrPersonne(nbrPersonne);
         reservation.setLieux(lieux);
 
@@ -120,5 +120,24 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
     // Vous pouvez ajouter d'autres méthodes CRUD si nécessaire
+    public void cancelReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id).orElse(null);
+        if (reservation == null) {
+            // Gérer le cas où la réservation n'existe pas
+            return;
+        }
+
+        Date currentDate = new Date();
+        Date arrivalDate = reservation.getDateArrivee();
+        long diffInMillies = arrivalDate.getTime() - currentDate.getTime();
+        long diffInHours = diffInMillies / (60 * 60 * 1000);
+
+        if (diffInHours <= 24) {
+            // Gérer le cas où l'annulation n'est pas autorisée
+            return;
+        }
+
+        reservationRepository.delete(reservation);
+    }
 
 }
