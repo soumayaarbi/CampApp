@@ -1,8 +1,8 @@
+
 <div class="container" [ngClass]="{'modal-closed': !isWindowOpen}">
   <form>
     <div class="row">
-      <h4>Réserver Votre Camping <button type="button" (click)="closeWindow()">Fermer</button>
-</h4>
+      <h4>Réserver Votre Camping </h4>
       <div class="input-group input-group-icon">
         <h6>Date d'arrivée</h6>
         <input type="Date" />
@@ -22,9 +22,7 @@
     </div>
     <div class="input-group input-group-icon">
       <select class="custom-select" name="location">
-        <option value="" disabled selected>
-          Choisir le type d'hébergement
-        </option>
+        <option value="" disabled selected>Choisir le type d'hébergement</option>
         <option>option1</option>
         <option>option2</option>
         <option>option3</option>
@@ -37,7 +35,10 @@
         <option>option2</option>
         <option>option3</option>
       </select>
-      <div class="input-icon"><i class="fa fa-key"></i></div>
+      <div class="input-icon"><i class="fa fa-key"></i></div><br> <br>
+      
     </div>
+<button class="button"type="button" >Réserver</button>
+<button class="button" type="button" [routerLink]="['/reservation']">Retour</button>
   </form>
 </div>
