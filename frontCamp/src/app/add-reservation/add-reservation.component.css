@@ -6,18 +6,18 @@
 }
 
 
-
-body {
-  padding: 1em;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  color: #b9b9b9;
-  background-color: #e3e3e3;
+body{
+  width:100%;
+}
+.container {
+  max-width: 120px; /* ou toute autre largeur souhaitée */
+ margin-left: 500px;
+ margin-top: 20px;
+  /*padding: 0 20px;  Ajoute un peu d'espace sur les côtés */
 }
 h4 {
   font-size: 70px;
   font-weight: 600;
-  background-image: url(/camping.jpg);
   background-size: 250px;
   background-repeat: repeat;
   color: transparent;
@@ -186,7 +186,7 @@ select option {
   padding: 1em 3em 2em 3em;
   margin: 0em auto;
   background-color: #fff;
-  background-image: url('camping1.jpg'); /* Utilisation d'un chemin relatif */
+ 
 }
 .row {
   zoom: 1;
@@ -266,4 +266,30 @@ select option {
 .button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+  
+.header {
+  height: 75px;
+  background-color: #f0f0f0;
+  width: 100%;
+}
+
+.side-nav {
+  width: 350px;
+  min-width: 230px;
+  min-height: calc(100vh - 60px); /* Réduit la hauteur du side-nav en tenant compte de la hauteur du header */
+  background-color: #113c60;
+  color: #fff;
+  box-shadow: 5px 5px 5px #939393;
+}
+
+.content {
+  display: flex;
+  width: 100%; /* Ajuste la largeur de la section content */
+}
+
+.main {
+  flex: 1; /* Utilise tout l'espace disponible */
+  padding: 30px;
 }

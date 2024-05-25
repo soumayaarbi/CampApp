@@ -1,4 +1,5 @@
 export interface Reservation {
+status: any;
   idReservation: number;
   dateArrivee: Date;
   dateSortie: Date;

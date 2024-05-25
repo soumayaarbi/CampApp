@@ -25,6 +25,7 @@
 .nav-item a {
   display: inline;
   text-decoration-line: none;
+  color:white;
 }
 
 @media only screen and (max-width: 1300px) {

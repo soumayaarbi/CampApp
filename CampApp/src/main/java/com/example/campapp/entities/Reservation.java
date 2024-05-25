@@ -1,5 +1,6 @@
 package com.example.campapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,22 +25,23 @@ public class Reservation implements Serializable {
     private Date dateSortie;
     private int nbrPersonne;
     private String lieux;
-
+    private String status;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hebergement_id")
     private Hebergement hebergement;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "equipement_id")
     private Equipements equipement;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "centre_id")
     private CentreDeCamping centreDeCamping;
-
-    @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
-    private Utilisateur utilisateur;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User utilisateur;
 
     public Long getIdReservation() {
         return idReservation;
@@ -105,11 +107,19 @@ public class Reservation implements Serializable {
         this.centreDeCamping = centreDeCamping;
     }
 
-    public Utilisateur getUtilisateur() {
+    public User getUtilisateur() {
         return utilisateur;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
+    public void setUtilisateur(User utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

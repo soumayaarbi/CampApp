@@ -1,21 +1,33 @@
+<div class="container">
+    <div class="header">
+      <app-header></app-header>
+    </div>
+    <div class="content">
+      <div class="side-nav">
+        <app-sidenav></app-sidenav>
+      </div>
+<div class="main">
+  <div class="notification success" id="success-notification">
+  Réservation annulée avec succès
+</div>
+<div class="notification error" id="error-notification">
+  Erreur lors de l'annulation de la réservation
+</div>
 <div class="reservation-header">
   <h2 class="reservation-title">Liste des réservations</h2>
   <br>
   <br>
   <br>
-  <button class="add-button" [routerLink]="['/add-reservation']" >Ajouter</button>
-  
-  
-  
+  <button class="add-button" routerLink="/addreservation" >Ajouter</button>
 </div>
-
-<table class="reservation-table" *ngIf="reservations.length > 0; else noReservations">
+<table class="reservation-table">
   <thead>
     <tr>
       <th>Date d'arrivée</th>
       <th>Date de sortie</th>
       <th>Nombre de personnes</th>
-      <th>Lieu</th>
+      <th>Lieux</th>
+      <th>Statut</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -24,15 +36,22 @@
       <td>{{ reservation.dateArrivee | date: 'yyyy-MM-dd' }}</td>
       <td>{{ reservation.dateSortie | date: 'yyyy-MM-dd' }}</td>
       <td>{{ reservation.nbrPersonne }}</td>
+      <td>{{reservation.status}}</td>
       <td>{{ reservation.lieux }}</td>
       <td>
-        <button class="edit-button" >Modifier</button>
-        <button class="cancel-button" >Annuler</button>
+        <button 
+          class="edit-button" 
+           [disabled]="reservation.status === 'annulée'">
+          Modifier
+        </button>
+        <button 
+          class="cancel-button" 
+          (click)="cancelReservation(reservation.idReservation)" 
+           [disabled]="reservation.status === 'annulée'">
+          Annuler
+        </button>
       </td>
     </tr>
   </tbody>
 </table>
-
-<ng-template #noReservations>
-  <p class="no-reservations">Aucune réservation trouvée.</p>
-</ng-template>
+</div>

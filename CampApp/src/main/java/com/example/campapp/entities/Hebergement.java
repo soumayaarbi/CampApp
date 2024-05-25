@@ -1,6 +1,7 @@
 package com.example.campapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -20,8 +21,9 @@ public class Hebergement implements Serializable {
     private int capacite;
     private float prix ;
     private String  description;
-
+    @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "centreId")
     private CentreDeCamping centreDeCamping;
 
     public Long getIdHebergement() {

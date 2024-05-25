@@ -1,44 +1,65 @@
+<div class="header">
+  <app-header></app-header>
+</div>
 
-<div class="container" [ngClass]="{'modal-closed': !isWindowOpen}">
-  <form>
-    <div class="row">
-      <h4>Réserver Votre Camping </h4>
+<div class="content">
+  <div class="side-nav">
+    <app-sidenav></app-sidenav>
+  </div>
+
+  <div class="container">
+    <div *ngIf="step === 1">
+      <h4>Choisir le lieu</h4>
       <div class="input-group input-group-icon">
-        <h6>Date d'arrivée</h6>
-        <input type="Date" />
-      </div>
-      <div class="input-group input-group-icon">
-        <h6>Date de sortie</h6>
-        <input type="Date" placeholder="Date de Sortie" />
-      </div>
-      <div class="input-group input-group-icon">
-        <select class="custom-select" name="location">
-          <option value="" disabled selected>Choisir un Centre</option>
-          <option>option1</option>
-          <option>option2</option>
-          <option>option3</option>
+        <select class="custom-select" name="location" [(ngModel)]="selectedLocation" (change)="loadCentresByLocation()">
+          <option value="" disabled selected>Choisir le lieu</option>
+          <option *ngFor="let location of availableLocations" [value]="location">{{ location }}</option>
         </select>
       </div>
     </div>
-    <div class="input-group input-group-icon">
-      <select class="custom-select" name="location">
-        <option value="" disabled selected>Choisir le type d'hébergement</option>
-        <option>option1</option>
-        <option>option2</option>
-        <option>option3</option>
-      </select>
+
+    <div *ngIf="step >= 2">
+      <h4>Choisir votre centre de camping</h4>
+      <div class="input-group input-group-icon">
+        <select class="custom-select" name="centre" (change)="loadEquipmentsAndAccommodationsByCentre()" [(ngModel)]="selectedCentre">
+          <option value="" disabled selected>Choisir votre centre</option>
+          <option *ngFor="let centre of availableCentres" [ngValue]="centre">{{ centre.nom }}</option>
+        </select>
+      </div>
     </div>
-    <div class="input-group input-group-icon">
-      <select class="custom-select" name="location">
-        <option value="" disabled selected>Choisir vos équipements</option>
-        <option>option1</option>
-        <option>option2</option>
-        <option>option3</option>
-      </select>
-      <div class="input-icon"><i class="fa fa-key"></i></div><br> <br>
-      
-    </div>
-<button class="button"type="button" >Réserver</button>
-<button class="button" type="button" [routerLink]="['/reservation']">Retour</button>
-  </form>
+
+   <div *ngIf="step >= 3">
+  <h4>Choisir vos équipements et hébergements</h4>
+  <div class="input-group input-group-icon">
+    <select class="custom-select" name="equipment" [(ngModel)]="selectedEquipment">
+      <option value="-1" selected>Pas d'équipement</option>
+      <option *ngFor="let equipment of availableEquipments" [value]="equipment.id">{{ equipment.nom }}</option>
+    </select>
+  </div>
+  <div class="input-group input-group-icon">
+    <select class="custom-select" name="accommodation">
+      <option value="" disabled selected>Choisir le type d'hébergement</option>
+      <option *ngFor="let accommodation of availableAccommodations" [value]="accommodation.id">{{ accommodation.nom }}</option>
+    </select>
+  </div>
+</div>
+
+
+    <div *ngIf="step === 4">
+  <h4>Finaliser la réservation</h4>
+  <div class="input-group input-group-icon">
+    <h6>Date d'arrivée</h6>
+    <input type="date" />
+  </div>
+  <div class="input-group input-group-icon">
+    <h6>Date de sortie</h6>
+    <input type="date" placeholder="Date de Sortie" />
+  </div>
+  
+  <!-- Boutons de retour et de confirmation -->
+  <div class="button-group">
+    <button class="btn btn-secondary" routerLink="/reservation">Retour</button>
+    <button class="btn btn-primary" >Confirmer la réservation</button>
+  </div>
+</div>
 </div>

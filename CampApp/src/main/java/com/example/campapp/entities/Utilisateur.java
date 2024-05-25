@@ -81,8 +81,6 @@ public class Utilisateur implements Serializable {
     public void setRole(Role role) {
         this.role = role;
     }
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Reservation> reservations;
 
 
 }
