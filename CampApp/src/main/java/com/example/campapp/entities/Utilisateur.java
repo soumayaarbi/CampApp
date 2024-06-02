@@ -1,6 +1,7 @@
 package com.example.campapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -84,5 +85,8 @@ public class Utilisateur implements Serializable {
     @OneToMany(mappedBy = "utilisateur")
     private List<Reservation> reservations;
 
+    @OneToMany(mappedBy = "utilisateur")
+    @JsonBackReference
+    private List<Reclamation> reclamations;
 
 }
