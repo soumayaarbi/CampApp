@@ -9,10 +9,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 @Configuration
+
 public class WebSecurityConfiguration {
 
     @Bean
@@ -23,10 +24,10 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
         http
-
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/signup", "/reservations", "/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**" ,"http://localhost:4200/reservation").permitAll()
+                        .requestMatchers("/api/reclamations/**").permitAll()
+                        .requestMatchers("/signup", "/reservations", "/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/error").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.realmName("campApp"));
 
@@ -43,5 +44,4 @@ public class WebSecurityConfiguration {
 
         return new InMemoryUserDetailsManager(user);
     }
-
 }

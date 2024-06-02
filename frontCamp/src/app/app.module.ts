@@ -18,6 +18,10 @@ import { AddReservationComponent } from './add-reservation/add-reservation.compo
 import { ModifyReservationComponent } from './modify-reservation/modify-reservation.component'; // Ensure correct path to Reservation model
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { ReclamationListComponent } from './reclamation-list/reclamation-list.component';
+import { ReclamationFormComponent } from './reclamation-form/reclamation-form.component';
+import { PiechartComponent } from './piechart/piechart.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +33,12 @@ import { FormsModule } from '@angular/forms';
     CentreCampingComponent,
     AddReservationComponent,
     ModifyReservationComponent,
+    ReclamationListComponent,
+    ReclamationFormComponent,
+    PiechartComponent,
+   
+   
+  
   ],
   providers: [ReservationService],
   bootstrap: [AppComponent],

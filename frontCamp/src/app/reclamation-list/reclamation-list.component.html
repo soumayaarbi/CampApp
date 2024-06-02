@@ -1,0 +1,45 @@
+<div>
+    <h2>Liste des Réclamations</h2>
+    <table border="1">
+      <thead>
+      <tr>
+        <th>Sujet</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let reclamation of reclamations">
+        <td>{{ reclamation.sujet }}</td>
+        <td>{{ reclamation.date }}</td>
+        <td>{{ reclamation.description }}</td>
+        <td>
+          <button (click)="editReclamation(reclamation)">Modifier</button>
+          <button (click)="deleteReclamation(reclamation.idReclamation)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Formulaire de modification -->
+  <div *ngIf="selectedReclamation">
+    <h2>Modifier Réclamation</h2>
+    <form (submit)="updateReclamation()">
+      <div>
+        <label for="sujet">Sujet:</label>
+        <input type="text" id="sujet" name="sujet" [(ngModel)]="selectedReclamation.sujet" required>
+      </div>
+      <div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" [(ngModel)]="selectedReclamation.date" required>
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" [(ngModel)]="selectedReclamation.description" required></textarea>
+      </div>
+      <button type="submit">Enregistrer</button>
+    </form>
+  </div>
+  
