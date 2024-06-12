@@ -1,0 +1,28 @@
+<div class="container">
+  <h2>Mettre à jour la boutique</h2>
+  <form [formGroup]="updateProduitForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nomProduit">Nom de la produit</label>
+      <input type="text" class="form-control" id="nomProduit" formControlName="nomProduit" required>
+    </div>
+    <div class="form-group">
+      <label for="prix">Prix</label>
+      <input type="text" class="form-control" id="prix" formControlName="prix" required>
+    </div>
+    <div class="form-group">
+      <label for="quantite">Quantite</label>
+      <input type="text" class="form-control" id="quantite" formControlName="quantite" required>
+    </div>
+    <div class="form-group">
+      <label for="promotion">Promotion</label>
+      <input type="text" class="form-control" id="promotion" formControlName="promotion" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" rows="3" formControlName="description" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="updateProduitForm.invalid" >
+      Mettre à jour la boutique
+    </button>
+  </form>
+</div>

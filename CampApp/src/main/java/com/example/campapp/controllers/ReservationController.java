@@ -23,11 +23,11 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping
+    @PostMapping("/add-reservation")
     public Reservation createReservation(@RequestBody ReservationRequest request) {
         return reservationService.createReservation(request.getDateArrivee(), request.getDateSortie(),
                 request.getNbrPersonne(), request.getLieux(), request.getIdHebergement(), request.getIdEquipement(),
-                request.getIdCentre(), request.getIdUtilisateur());
+                request.getIdCentre(), request.getId());
     }
 
     @GetMapping
@@ -39,9 +39,12 @@ public class ReservationController {
     public Reservation updateReservation(@PathVariable Long id, @RequestBody ReservationRequest request) {
         return reservationService.updateReservation(id, request.getDateArrivee(), request.getDateSortie(),
                 request.getNbrPersonne(), request.getLieux(), request.getIdHebergement(), request.getIdEquipement(),
-                request.getIdCentre(), request.getIdUtilisateur());
+                request.getIdCentre(), request.getId());
     }
-
+    @GetMapping("user/{userId}")
+    public List<Reservation> getReservationsByUserId(@PathVariable Long userId) {
+        return reservationService.findReservationsByUserId(userId);
+    }
     @DeleteMapping("/{id}")
     public void deleteReservation(@PathVariable Long id) {
         reservationService.deleteReservation(id);
@@ -55,6 +58,10 @@ public class ReservationController {
                 return ResponseEntity.notFound().build(); // La réservation n'existe pas
             }
 
+            if ("annulée".equals(reservation.getStatus())) {
+                return ResponseEntity.badRequest().body("La réservation est déjà annulée.");
+            }
+
             LocalDate today = LocalDate.now();
             LocalDate dateArrivee = reservation.getDateArrivee().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             long differenceInDays = ChronoUnit.DAYS.between(today, dateArrivee);
@@ -63,7 +70,9 @@ public class ReservationController {
                 return ResponseEntity.badRequest().body("La réservation ne peut pas être annulée car elle est à moins de 24 heures de sa date d'arrivée.");
             }
 
-            reservationService.cancelReservation(id);
+            // Mettre à jour le statut de la réservation à "ANNULÉ"
+            reservationService.updateReservationStatus(id, "annulée");
+
             return ResponseEntity.ok("La réservation a été annulée avec succès.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -71,6 +80,10 @@ public class ReservationController {
         }
     }
 
-
-
 }
+
+
+
+
+
+

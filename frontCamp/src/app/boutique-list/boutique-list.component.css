@@ -1,0 +1,140 @@
+/* Container styling */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+form .form-group {
+  flex: 1;
+  margin-right: 10px;
+}
+
+form .form-control {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+form .btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form .btn:hover {
+  background-color: #0056b3;
+}
+
+/* Card styling */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  width: 18rem;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ccc;
+}
+
+.card .card-body {
+  padding: 20px;
+}
+
+.card .card-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.card .card-text {
+  color: #555;
+}
+
+.list-group-item {
+  font-size: 14px;
+}
+
+/* Styles for the update button */
+.btn-update {
+  background-color: #f0a500;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-update:hover {
+  background-color: #d18b00;
+  transform: scale(1.05);
+}
+
+.btn-update:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(240, 165, 0, 0.5);
+}
+
+/* Styles for the delete button */
+.btn-delete {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px; /* Optional: Add some space between the buttons */
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.btn-delete:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}

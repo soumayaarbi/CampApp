@@ -3,6 +3,7 @@ package com.example.campapp.dto;
 import java.util.Date;
 
 public class ReservationRequest {
+    private Long idReservation;
     private Date dateArrivee;
     private Date dateSortie;
     private int nbrPersonne;
@@ -10,7 +11,16 @@ public class ReservationRequest {
     private Long idHebergement;
     private Long idEquipement;
     private Long idCentre;
-    private Long idUtilisateur;
+    private Integer id;
+
+    // Getters and Setters
+    public Long getIdReservation() {
+        return idReservation;
+    }
+
+    public void setIdReservation(Long idReservation) {
+        this.idReservation = idReservation;
+    }
 
     public Date getDateArrivee() {
         return dateArrivee;
@@ -68,13 +78,11 @@ public class ReservationRequest {
         this.idCentre = idCentre;
     }
 
-    public Long getIdUtilisateur() {
-        return idUtilisateur;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdUtilisateur(Long idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
+    public void setId(Integer id) {
+        this.id = id;
     }
-
-    // Getters and setters
 }

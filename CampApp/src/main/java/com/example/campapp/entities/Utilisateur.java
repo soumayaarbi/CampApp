@@ -1,12 +1,12 @@
 package com.example.campapp.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,69 +24,26 @@ public class Utilisateur implements Serializable {
     private String email;
     private String motDePasse;
     private Date datedenais;
+    private String adresse;
     @Enumerated(EnumType.STRING)
     Role role;
 
-    public Long getIdUtilisateur() {
-        return idUtilisateur;
-    }
-
-    public void setIdUtilisateur(Long idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMotDePasse() {
-        return motDePasse;
-    }
-
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    public Date getDatedenais() {
-        return datedenais;
-    }
-
-    public void setDatedenais(Date datedenais) {
-        this.datedenais = datedenais;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    // Relation avec Boutique
     @OneToMany(mappedBy = "utilisateur")
-    private List<Reservation> reservations;
+    private Set<Boutique> boutiques;
 
-    @OneToMany(mappedBy = "utilisateur")
-    @JsonBackReference
-    private List<Reclamation> reclamations;
+    // Relation avec Panier
+    @OneToOne(mappedBy = "client")
+    private Panier panier;
+
+    // Relation avec Commande
+    @OneToMany(mappedBy = "client")
+    private Set<Commande> commandes;
+
+
+
+
+
+
 
 }

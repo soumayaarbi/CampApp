@@ -11,4 +11,4 @@ export class AddReservationComponent {
   closeWindow() {
     this.isWindowOpen = false;
   }
-}
+  }

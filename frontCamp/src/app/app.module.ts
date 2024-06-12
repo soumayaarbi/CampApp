@@ -10,17 +10,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReservationComponent } from './reservation/reservation.component';
 import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 import { CentreCampingComponent } from './centre-camping/centre-camping.component';
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'; // Import HttpClientModule
 import { ReservationService } from './reservation/reservation.service';
-import { Reservation } from './Models/reservation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddReservationComponent } from './add-reservation/add-reservation.component';
-import { ModifyReservationComponent } from './modify-reservation/modify-reservation.component'; // Ensure correct path to Reservation model
+import { ModifyReservationComponent } from './modify-reservation/modify-reservation.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
-import { ReclamationListComponent } from './reclamation-list/reclamation-list.component';
-import { ReclamationFormComponent } from './reclamation-form/reclamation-form.component';
-import { PiechartComponent } from './piechart/piechart.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BoutiqueListComponent } from './boutique-list/boutique-list.component';
+import {BoutiqueService} from "./boutique.service";
+import { CardComponent } from './card/card.component';
+import { AddBoutiqueComponent } from './add-boutique/add-boutique.component';
+import { UpdateBoutiqueComponent } from './update-boutique/update-boutique.component';
+import { ProductListComponent } from './produit-list/produit-list.component';
+import { NgChartsModule } from 'ng2-charts';
+import {UpdateProductComponent} from "./update-product/update-product.component";
 
 @NgModule({
   declarations: [
@@ -33,15 +37,16 @@ import { PiechartComponent } from './piechart/piechart.component';
     CentreCampingComponent,
     AddReservationComponent,
     ModifyReservationComponent,
-    ReclamationListComponent,
-    ReclamationFormComponent,
-    PiechartComponent,
-   
-   
-  
+    BoutiqueListComponent,
+    CardComponent,
+    AddBoutiqueComponent,
+    UpdateBoutiqueComponent,
+    ProductListComponent,
+    UpdateProductComponent,
+
+
+
   ],
-  providers: [ReservationService],
-  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -49,7 +54,12 @@ import { PiechartComponent } from './piechart/piechart.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgChartsModule
   ],
+  providers: [ReservationService,BoutiqueService
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

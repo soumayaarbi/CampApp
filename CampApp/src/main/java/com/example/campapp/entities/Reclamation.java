@@ -1,9 +1,6 @@
 package com.example.campapp.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -23,12 +20,5 @@ public class Reclamation implements Serializable {
     private String sujet;
     private Date date;
     private String description ;
-
-    @ManyToOne
-    @JsonManagedReference
-    @JsonIgnore
-    @JsonBackReference
-    @JoinColumn(name = "utilisateur_id")
-    private Utilisateur utilisateur;
 
 }

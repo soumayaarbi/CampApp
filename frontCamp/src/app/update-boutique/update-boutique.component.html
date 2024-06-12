@@ -1,0 +1,21 @@
+<!-- update-boutique.component.html -->
+<div class="container">
+  <h2>Mettre à jour la boutique</h2>
+  <form [formGroup]="updateBoutiqueForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nomBoutique">Nom de la boutique</label>
+      <input type="text" class="form-control" id="nomBoutique" formControlName="nomBoutique" required>
+    </div>
+    <div class="form-group">
+      <label for="owner">Owner</label>
+      <input type="text" class="form-control" id="owner" formControlName="owner" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" rows="3" formControlName="description" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="updateBoutiqueForm.invalid">
+      Mettre à jour la boutique
+    </button>
+  </form>
+</div>

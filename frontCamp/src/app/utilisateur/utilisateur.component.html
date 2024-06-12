@@ -1,1 +1,18 @@
-<p>utilisateur works!</p>
+<!-- utilisateur.component.html -->
+
+<div class="card-container">
+  <a routerLink="/utilisateur" *ngFor="let user of utilisateurs">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="assets/boutiqueIcon.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ user.nom }}</h5>
+        <p class="card-text">{{ user.prenom }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: {{ user.idUtilisateur }}</li>
+        <li class="list-group-item">Date de naissance: {{ user.datedenais | date }}</li>
+        <li class="list-group-item">Email: {{ user.email }}</li>
+      </ul>
+    </div>
+  </a>
+</div>

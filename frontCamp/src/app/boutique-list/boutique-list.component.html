@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <h2>Liste des Boutiques</h2>
+
+  <!-- Formulaire de recherche -->
+  <form (ngSubmit)="searchBoutiqueByNom(searchTerm.value)" class="mb-4">
+    <div class="form-group">
+      <input #searchTerm type="text" class="form-control" placeholder="Rechercher une boutique " required>
+    </div>
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+  </form>
+
+  <!-- Affichage des résultats de recherche -->
+  <div *ngIf="searchResult" class="mt-4">
+    <h3>Résultat de la Recherche:</h3>
+    <div class="card mb-3">
+      <img class="card-img-top" src="assets/boutiqueIcon.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ searchResult.nomBoutique }}</h5>
+        <p class="card-text">{{ searchResult.description }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: {{ searchResult.idBoutique }}</li>
+          <li class="list-group-item">Date de création: {{ searchResult.dateCreation | date }}</li>
+          <li class="list-group-item">Owner: {{ searchResult.owner }}</li>
+        </ul>
+        <div class="button-container">
+          <button class="btn btn-update" (click)="navigateToUpdateBoutique(boutiques.idBoutique)">Modifier</button>
+          <button class="btn btn-delete" (click)="deleteBoutique(boutiques.idBoutique)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="searchError" class="alert alert-danger mt-4">{{ searchError }}</div>
+
+  <!-- Lien pour ajouter une nouvelle boutique -->
+  <div class="card-container mb-4" routerLink="/add-boutique">
+    <div class="card">
+      <img class="card-img-top" src="assets/ajouter-icone.jpg" alt="Card image cap">
+    </div>
+  </div>
+
+  <!-- Affichage de la liste des boutiques -->
+  <div class="card-container">
+    <div class="card mb-3" *ngFor="let boutique of boutiques">
+      <img class="card-img-top" src="assets/boutiqueIcon.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ boutique.nomBoutique }}</h5>
+        <p class="card-text">{{ boutique.description }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: {{ boutique.idBoutique }}</li>
+          <li class="list-group-item">Date de création: {{ boutique.dateCreation | date }}</li>
+          <li class="list-group-item">Owner: {{ boutique.owner }}</li>
+        </ul>
+        <div class="button-container">
+          <button class="btn btn-update" (click)="navigateToUpdateBoutique(boutique.idBoutique)">Modifier</button>
+          <button class="btn btn-delete" (click)="deleteBoutique(boutique.idBoutique)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

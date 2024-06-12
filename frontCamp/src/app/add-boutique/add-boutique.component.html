@@ -1,0 +1,25 @@
+
+
+<div class="container form-container">
+  <h2>Ajouter une boutique</h2>
+  <form [formGroup]="addBoutiqueForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nomBoutique">Nom de la boutique</label>
+      <input type="text" class="form-control" id="nomBoutique" formControlName="nomBoutique" required>
+    </div>
+    <div class="form-group">
+      <label for="owner">Owner</label>
+      <input type="text" class="form-control" id="owner" formControlName="owner" required>
+    </div>
+    <div class="form-group">
+      <label for="dateCreation">Date de création</label>
+      <input type="text" class="form-control" id="dateCreation" formControlName="dateCreation" readonly>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" rows="3" formControlName="description" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit" [disabled]="addBoutiqueForm.invalid">Créer la boutique</button>
+  </form>
+</div>
+

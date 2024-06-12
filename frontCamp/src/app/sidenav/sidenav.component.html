@@ -1,23 +1,20 @@
 <div class="nav-items">
     <div class="nav-item">
         <fa-icon [icon]="faDashboard"></fa-icon>
-        <a routerLink="pieChart">Dashboard</a> 
+        <span>Dashboard </span>
     </div>
     <div class="nav-item">
        <a routerLink="reservation"> <fa-icon [icon]="faTents"></fa-icon> Reservation</a>
 
     </div>
-  <div class="nav-item">
-    <a routerLink="/reclamation">   <fa-icon [icon]="faExclamationTriangle"></fa-icon>
-      Reclamation </a>
-  </div>
+     <div class="nav-item">
+         <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+        <span> Reclamation </span>
+    </div>
      <div class="nav-item">
         <fa-icon [icon]="faPersonHiking"></fa-icon>
         <span> Reserver une activité </span>
     </div>
-  <div class="nav-item">
-    <a routerLink="reclamations"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Liste des Réclamations</a>
-  </div>
      <div class="nav-item">
         <fa-icon [icon]="faComment"></fa-icon>
         <span> Forum</span>
@@ -26,8 +23,9 @@
         <fa-icon [icon]="faFaceSmile"></fa-icon>
         <span> Feedback </span>
     </div>
-     <div class="nav-item">
-        <fa-icon [icon]="faShoppingCart"></fa-icon>
-        <span> Boutique </span>
-    </div>
+  <div class="nav-item">
+    <a routerLink="/card">
+      <fa-icon [icon]="faShoppingCart"></fa-icon> Boutique
+    </a>
+  </div>
 </div>

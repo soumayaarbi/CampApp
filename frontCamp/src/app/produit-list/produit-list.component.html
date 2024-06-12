@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="header">
+    <h1>{{boutiqueName}}</h1>
+    <button class="btn btn-primary">Consulter commande</button>
+  </div>
+  <button class="btn btn-primary" (click)="addProduct(produits)">Ajouter</button>
+  <h2>Liste des produits</h2>
+  <table class="product-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Prix</th>
+      <th>Quantité</th>
+      <th>Promotion</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let produit of produits">
+      <td>{{produit.idProduit}}</td>
+      <td>{{produit.nom}}</td>
+      <td>{{produit.prix}}</td>
+      <td>{{produit.quantite}}</td>
+      <td>{{produit.promotion}}%</td>
+      <td>{{produit.description}}</td>
+      <td>
+        <button class="btn-update" (click)="navigateToUpdateProduit(produit.idProduit)">Edit</button>
+        <button class="btn-delete" (click)="deleteProduct(produit.idProduit)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h2>Les produits les plus vendus</h2>
+  <div>
+    <canvas baseChart
+            [data]="topSellingProducts"
+            [options]="chartOptions"
+            >
+    </canvas>
+  </div>
+</div>
