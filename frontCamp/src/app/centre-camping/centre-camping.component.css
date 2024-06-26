@@ -1,0 +1,17 @@
+.centre-camping-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.centre-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.centre-card h2 {
+    margin-top: 0;
+}

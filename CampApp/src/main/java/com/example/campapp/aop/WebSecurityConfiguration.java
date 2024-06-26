@@ -27,7 +27,7 @@ public class WebSecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/api/reclamations/**").permitAll()
-                        .requestMatchers("/signup", "/reservations", "/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/error").permitAll()
+                        .requestMatchers("/signup", "/reservations", "/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/error", "/Feedbacks/**", "/Forum/**", "/Reaction/**","/retrieve-all-centres/**" , "/Centre/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.realmName("campApp"));
 

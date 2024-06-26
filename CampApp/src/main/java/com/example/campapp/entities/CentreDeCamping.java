@@ -1,6 +1,7 @@
 package com.example.campapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -71,5 +72,10 @@ public class CentreDeCamping implements Serializable {
         this.equipements = equipements;
     }
 
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="centre")
+    private List<Feedbacks> feedbacks;
+//    1 to many maa lfeedback centre accocié l plusieurs feedback
 
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CentreDeCampingRepository extends JpaRepository<CentreDeCamping, Long> {
+
+  public   CentreDeCamping findByIdCentre(Long idCentre);
 }

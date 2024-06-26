@@ -2,6 +2,7 @@ package com.example.campapp.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
 @EqualsAndHashCode
 @Entity
 public class Utilisateur implements Serializable {
@@ -88,5 +89,13 @@ public class Utilisateur implements Serializable {
     @OneToMany(mappedBy = "utilisateur")
     @JsonBackReference
     private List<Reclamation> reclamations;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateur", fetch = FetchType.EAGER)
+    private List<Feedbacks> feedbacks;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="utilisateur")
+    private List<Reaction> reactions;
 
 }

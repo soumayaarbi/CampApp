@@ -21,6 +21,12 @@ import { FormsModule } from '@angular/forms';
 import { ReclamationListComponent } from './reclamation-list/reclamation-list.component';
 import { ReclamationFormComponent } from './reclamation-form/reclamation-form.component';
 import { PiechartComponent } from './piechart/piechart.component';
+import {ForumListComponent} from "./forum-list/forum-list.component";
+import {ForumAddComponent} from "./forum-add/forum-add.component";
+import {FeedbackListComponent} from "./feedback-list/feedback-list.component";
+import {FeedbackAddComponent} from "./feedback-add/feedback-add.component";
+import { FeedbackCentreComponent } from './feedback-centre/feedback-centre.component';
+
 
 @NgModule({
   declarations: [
@@ -36,9 +42,14 @@ import { PiechartComponent } from './piechart/piechart.component';
     ReclamationListComponent,
     ReclamationFormComponent,
     PiechartComponent,
-   
-   
-  
+    ForumListComponent,
+    ForumAddComponent,
+    FeedbackListComponent,
+    FeedbackAddComponent,
+    FeedbackCentreComponent,
+
+
+
   ],
   providers: [ReservationService],
   bootstrap: [AppComponent],

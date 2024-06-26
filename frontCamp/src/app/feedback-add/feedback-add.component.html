@@ -1,0 +1,91 @@
+<!-- feedback-add.component.html -->
+
+<div class="container">
+  <h2>Ajouter Feedback</h2>
+</div>
+
+<div class="form-container">
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="commentaire">Commentaire:</label>
+      <input type="text" id="commentaire" name="commentaire" [(ngModel)]="feedback.commentaire" required>
+    </div>
+    <div class="form-group">
+      <label for="note">Note:</label>
+      <input type="number" id="note" name="note" [(ngModel)]="feedback.note" required>
+    </div>
+    <div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" [(ngModel)]="feedback.date" required>
+    </div>
+    <button class="submit-button" type="submit">Ajouter Feedback</button>
+  </form>
+
+
+</div>
+
+
+
+
+
+
+<div  class = "form-activite" align="left">
+  <form align="left">
+    <h2 align="left">Activités de l'entreprise</h2>
+
+    <div class="photo-with-text">
+      <img src="assets/pp.png" alt="Photo location" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo" >Profil revendiqué</span>
+    </div>
+    <hr>
+    <div class="photo-with-text">
+      <img src="assets/papier.png" alt="Photo location" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo" >Demande des avis - positifs comme négatifs</span>
+    </div>
+    <hr>
+    <div class="photo-with-text">
+      <img src="assets/de-largent.png" alt="Photo location" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo" >Paye pour plus de fonctionnalités</span>
+    </div>
+    <hr>
+    <div class="photo-with-text">
+      <img src="assets/commenter.png" alt="Photo location" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo" >A répondu à 96 % de ses avis négatifs</span>
+    </div>
+    <hr>
+    <div class="photo-with-text">
+      <img src="assets/time-and-date.png" alt="Photo location" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo" >Répond aux avis négatifs en - d'1 semaine</span>
+    </div>
+
+  </form>
+</div>
+
+
+<div  class = "form-description" align="left">
+  <form align="left">
+    <h2 align="left">À propos de Campers.com </h2>
+    <p>Informations provenant de diverses sources externes</p>
+    <br>
+    <p>Book safely among more than 2000 campsites, from 1 to 5 stars, in France and in Europe</p>
+    <hr>
+    <h1>Contact</h1>
+    <div class="photo-with-text">
+      <img src="assets/ff.png" alt="Photo description" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo"  style="color: blue">Support@campers.com</span>
+    </div>
+    <div class="photo-with-text">
+      <img src="assets/ll.jpg" alt="Photo location" class="photo" style="width: 30px;">
+      <span class="text-next-to-photo" >18-20 Rue Hbib Doudi 2033 Megrine Tunis</span>
+    </div>
+    <div>
+      <h1>Catégorie</h1>
+      <p>Camp.com se classe n° 11 sur 15 meilleures entreprises </p>
+      <p>dans la catégorie Location de vacances sur Trustpilot</p>
+    </div>
+
+
+
+  </form>
+</div>
+

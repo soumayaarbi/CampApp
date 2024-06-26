@@ -1,1 +1,16 @@
-<p>centre-camping works!</p>
+<div class="centre-camping-container">
+    <h1>Centre de Camping</h1>
+
+    <div *ngIf="centree && centree.length > 0; else noData">
+        <div *ngFor="let centre of centree" class="centre-card">
+            <h2>{{ centre.nom }}</h2>
+            <p><strong>Lieu:</strong> {{ centre.lieu }}</p>
+            <button><a routerLink="/feedback/centre/{{centre.idCentre}}" >         AJOTUER FEEDBACK Y BHIM        </a>     </button>
+        </div>
+    </div>
+
+    <ng-template #noData>
+        <p>Aucun centre de camping disponible pour le moment.</p>
+    </ng-template>
+
+</div>

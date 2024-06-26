@@ -1,7 +1,7 @@
 <div class="nav-items">
     <div class="nav-item">
         <fa-icon [icon]="faDashboard"></fa-icon>
-        <a routerLink="pieChart">Dashboard</a> 
+        <a routerLink="pieChart">Dashboard</a>
     </div>
     <div class="nav-item">
        <a routerLink="reservation"> <fa-icon [icon]="faTents"></fa-icon> Reservation</a>
@@ -19,11 +19,13 @@
     <a routerLink="reclamations"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Liste des Réclamations</a>
   </div>
      <div class="nav-item">
-        <fa-icon [icon]="faComment"></fa-icon>
+       <a routerLink="/forum">
+        <fa-icon [icon]="faComment"></fa-icon></a>
         <span> Forum</span>
     </div>
      <div class="nav-item">
-        <fa-icon [icon]="faFaceSmile"></fa-icon>
+       <a routerLink="/centre/list">
+        <fa-icon [icon]="faFaceSmile"></fa-icon></a>
         <span> Feedback </span>
     </div>
      <div class="nav-item">
