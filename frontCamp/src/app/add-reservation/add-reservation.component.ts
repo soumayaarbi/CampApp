@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { ReservationService } from '../reservation/reservation.service';
+import { AuthService } from '../auth.service';
+import { Reservation } from '../Models/reservation';
 
 @Component({
   selector: 'app-add-reservation',
@@ -7,48 +11,50 @@ import { ReservationService } from '../reservation/reservation.service';
   styleUrls: ['./add-reservation.component.css'],
 })
 export class AddReservationComponent implements OnInit {
-  selectedLocation: string = '';
-  selectedCentre: any = null; // Utiliser any pour conserver l'objet complet
   availableLocations: string[] = [];
   availableCentres: any[] = [];
+  step: number = 1;
+  selectedCentre: any;
+  selectedAccommodation: any;
+  selectedEquipment: any;
   availableEquipments: any[] = [];
   availableAccommodations: any[] = [];
-  step: number = 1;
-  selectedEquipment: string = '';
+  arrivalDate: string = '';
+  departureDate: string = '';
+  nbrPersonne: number = 0;
+  selectedLocation: string = '';
+  userId: number | null = null;
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(
+    private reservationService: ReservationService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadLocations();
+    this.authService.getUserId().subscribe((userId) => {
+      if (userId) {
+        this.userId = userId;
+        console.log('User ID set:', this.userId);
+      } else {
+        console.error('User ID is invalid');
+      }
+    });
   }
 
   loadLocations() {
-    this.reservationService.getAllLieux().subscribe(
-      (locations) => {
-        this.availableLocations = locations;
-      },
-      (error) => {
-        console.error('Failed to load locations:', error);
-      }
-    );
+    this.reservationService.getAllLieux().subscribe((locations) => {
+      this.availableLocations = locations;
+    });
   }
 
   loadCentresByLocation() {
     this.reservationService
       .getCentresByLocation(this.selectedLocation)
-      .subscribe(
-        (centres) => {
-          this.availableCentres = centres;
-          this.step = 2;
-        },
-        (error) => {
-          console.error('Failed to load centres:', error);
-        }
-      );
-  }
-
-  selectCentre(centre: any) {
-    this.selectedCentre = centre;
+      .subscribe((centres) => {
+        this.availableCentres = centres;
+      });
   }
 
   loadEquipmentsAndAccommodationsByCentre() {
@@ -56,43 +62,94 @@ export class AddReservationComponent implements OnInit {
       this.selectedCentre &&
       typeof this.selectedCentre.idCentre === 'number'
     ) {
-      console.log('Selected centre:', this.selectedCentre);
-
       const centreId = this.selectedCentre.idCentre;
+      const capacity = this.nbrPersonne;
 
-      // Utilisez centreId dans les requêtes GET
       this.reservationService
-        .getEquipmentsByCentre(centreId.toString())
-        .subscribe(
-          (equipments) => {
-            this.availableEquipments = equipments;
+        .getEquipmentsByCentre(centreId)
+        .subscribe((equipments) => {
+          this.availableEquipments = equipments;
+        });
 
-            // Vérifier si les équipements sont chargés avec succès
-            if (this.availableAccommodations.length > 0) {
-              this.step = 4; // Activer la Step 4 uniquement lorsque les équipements et les hébergements sont chargés
-            }
-          },
-          (error) => {
-            console.error('Failed to load equipments:', error);
-          }
-        );
       this.reservationService
-        .getAccommodationsByCentre(centreId.toString())
-        .subscribe(
-          (accommodations) => {
-            this.availableAccommodations = accommodations;
-
-            // Vérifier si les hébergements sont chargés avec succès
-            if (this.availableEquipments.length > 0) {
-              this.step = 4; // Activer la Step 4 uniquement lorsque les équipements et les hébergements sont chargés
-            }
-          },
-          (error) => {
-            console.error('Failed to load accommodations:', error);
-          }
-        );
+        .getAccommodationsByCentreAndCapacity(centreId, capacity)
+        .subscribe((accommodations) => {
+          this.availableAccommodations = accommodations.filter(
+            (accommodation: any) => accommodation.capacite >= capacity
+          );
+          console.log('Hébergements chargés:', this.availableAccommodations);
+        });
     } else {
       console.error('Selected centre is not valid');
     }
+  }
+
+  nextStep() {
+    if (this.step < 4) {
+      this.step++;
+    }
+  }
+
+  previousStep() {
+    if (this.step > 1) {
+      this.step--;
+    }
+  }
+
+  submitReservation() {
+    if (
+      !this.selectedCentre ||
+      !this.selectedAccommodation ||
+      !this.selectedEquipment ||
+      !this.userId
+    ) {
+      console.error(
+        'Centre, accommodation, equipment, or user ID is not selected'
+      );
+      return;
+    }
+
+    const centreId = this.selectedCentre.idCentre;
+    const accommodationId = this.selectedAccommodation.idHebergement;
+    const equipmentId = this.selectedEquipment.idEquipement;
+
+    if (!centreId || !accommodationId || !equipmentId) {
+      console.error('Centre ID, accommodation ID, or equipment ID is missing');
+      return;
+    }
+
+    const reservation: Reservation = {
+      dateArrivee: new Date(this.arrivalDate),
+      dateSortie: new Date(this.departureDate),
+      nbrPersonne: this.nbrPersonne,
+      lieux: this.selectedLocation,
+      idHebergement: accommodationId,
+      idEquipement: equipmentId,
+      idCentre: centreId,
+      status: 'pending',
+      userId: this.userId,
+    };
+
+    console.log('Submitting reservation:', reservation);
+
+    
+    Swal.fire({
+      text: 'Vous voulez confirmer cette réservation?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Oui',
+      cancelButtonText: 'Non',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Envoyer la réservation
+         this.router.navigate(['/reservation']);
+        this.reservationService.addReservation(reservation).subscribe(() => {
+          // Rediriger l'utilisateur si la réservation est ajoutée avec succès
+         
+        });
+      }
+    });
+
+    
   }
 }

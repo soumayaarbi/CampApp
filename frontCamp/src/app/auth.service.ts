@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 interface UpdateResponse {
   success: boolean;
@@ -138,5 +138,22 @@ export class AuthService {
       `${this.apiUrl}/updateProfile`,
       updatedUser
     );
+  }
+  resetPassword(username: string, newPassword: string): Observable<any> {
+    return this.http
+      .post(
+        `${this.apiUrl}/reset-password`,
+        { username, newPassword },
+        {
+          headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+          observe: 'response',
+        }
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error in resetPassword:', error); // Debug
+          throw error;
+        })
+      );
   }
 }

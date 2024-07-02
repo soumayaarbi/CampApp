@@ -1,10 +1,10 @@
 package com.example.campapp.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.io.Serializable;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -13,13 +13,19 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class Feedbacks implements Serializable {
+public class Feedback implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idFeedback; // Clé primaire
     private String commentaire;
     private int note;
-    private Date date;
 
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "centre_id")
+    private CentreDeCamping centre;
 }

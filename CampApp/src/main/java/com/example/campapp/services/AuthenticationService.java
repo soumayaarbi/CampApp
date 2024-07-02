@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -106,5 +107,16 @@ public class AuthenticationService {
         token.setLoggedOut(false);
         token.setUser(user);
         tokenRepository.save(token);
+    }
+    public boolean resetPassword(String username, String newPassword) {
+        Optional<User> userOptional = repository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPassword(passwordEncoder.encode(newPassword));
+            repository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

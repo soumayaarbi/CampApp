@@ -1,6 +1,8 @@
 package com.example.campapp.services;
 
+import com.example.campapp.entities.CentreDeCamping;
 import com.example.campapp.entities.Equipements;
+import com.example.campapp.repositories.CentreDeCampingRepository;
 import com.example.campapp.repositories.EquipementsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,8 @@ import java.util.List;
 public class EquipementsService {
 
     private final EquipementsRepository equipementsRepository;
-
+    @Autowired
+    private CentreDeCampingRepository centreDeCampingRepository;
     @Autowired
     public EquipementsService(EquipementsRepository equipementsRepository) {
         this.equipementsRepository = equipementsRepository;
@@ -39,4 +42,13 @@ public class EquipementsService {
     public List<Equipements> findEquipementsByCentreDeCampingId(Long centreId) {
         return equipementsRepository.findByCentreDeCampingIdCentre(centreId);
     }
+    public Equipements createEquipement(Long idCentre, Equipements equipement) {
+        CentreDeCamping centreDeCamping = centreDeCampingRepository.findById(idCentre).orElse(null);
+        if (centreDeCamping != null) {
+            equipement.setCentreDeCamping(centreDeCamping);
+            return equipementsRepository.save(equipement);
+        }
+        return null;
+    }
+
 }

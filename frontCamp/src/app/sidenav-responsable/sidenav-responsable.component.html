@@ -1,19 +1,22 @@
 <div class="nav-items">
     <div class="nav-item">
          <fa-icon [icon]="faDashboard"></fa-icon>
-        <span>Dashboard </span>
+        
+         <a routerLink="/mainresponsable">  Dashboard</a>
     </div>
-    <div class="nav-item">
-       <a routerLink="/reservation"> <fa-icon [icon]="faTents"></fa-icon> Reservation</a>
-      
+     <div class="nav-item">
+        
+         <a routerLink="/listcentres"> <fa-icon [icon]="faTents"></fa-icon> Gestion des Centres</a>
     </div>
+    
      <div class="nav-item">
          <fa-icon [icon]="faExclamationTriangle"></fa-icon>
-        <span> Reclamation </span>
+        <a routerLink="/reclamations">Reclamations</a>  
     </div>
+
      <div class="nav-item">
         <fa-icon [icon]="faPersonHiking"></fa-icon>
-        <span> Reserver une activité </span>
+        <span> Gestion des activités </span>
     </div>
      <div class="nav-item">
         <fa-icon [icon]="faComment"></fa-icon>

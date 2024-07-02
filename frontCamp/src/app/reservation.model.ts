@@ -1,5 +1,7 @@
 export interface Reservation {
-status: any;
+  centre: any;
+  location: string;
+  status: any;
   idReservation: number;
   dateArrivee: Date;
   dateSortie: Date;
@@ -8,7 +10,7 @@ status: any;
   hebergement: Hebergement;
   equipement: Equipement;
   centreDeCamping: CentreDeCamping;
-  utilisateur: Utilisateur;
+  userId: number; // Ajoutez userId ici
 }
 
 export interface Hebergement {
@@ -22,7 +24,4 @@ export interface Equipement {
 export interface CentreDeCamping {
   // Propriétés du centre de camping
 }
-
-export interface Utilisateur {
-  // Propriétés de l'utilisateur
-}
+export interface userId{}

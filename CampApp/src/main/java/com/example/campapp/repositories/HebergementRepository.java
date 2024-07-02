@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface HebergementRepository extends JpaRepository<Hebergement, Long> {
     List<Hebergement> findByCentreDeCampingIdCentre(Long idCentre);
 
+
+    List<Hebergement> findByCentreDeCampingIdCentreAndCapaciteGreaterThanEqual(Long idCentre, int capacite);
+
 }

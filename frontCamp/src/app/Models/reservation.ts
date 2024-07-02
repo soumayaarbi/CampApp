@@ -1,18 +1,30 @@
+export interface Reservation {
+  dateArrivee: Date;
+  dateSortie: Date;
+  nbrPersonne: number;
+  lieux: string;
+  idHebergement: number;
+  idEquipement: number;
+  idCentre: number;
+  status: string;
 
-export class Reservation {
-  
-  constructor(
-    public id: number,
-      public idReservation?: number,
-  public dateArrivee?: Date,
-  public dateSortie?: Date,
- public nbrPersonne?: number,
-  public lieux?: string,
-  public idHebergement?: number,
-  public idEquipement?: number,
-    public idCentre?: number
-  
-  
-  ){}
+  hebergement?: Hebergement; // Utilisez ? pour indiquer que la propriété est optionnelle
+  equipement?: Equipement; // Utilisez ? pour indiquer que la propriété est optionnelle
+  centreDeCamping?: CentreDeCamping; // Utilisez ? pour indiquer que la propriété est optionnelle
+  userId: number;
+}
 
+export interface Hebergement {
+  id: number;
+  // Autres propriétés
+}
+
+export interface Equipement {
+  id: number;
+  // Autres propriétés
+}
+
+export interface CentreDeCamping {
+  idCentre: number;
+  // Autres propriétés
 }

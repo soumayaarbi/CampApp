@@ -17,10 +17,9 @@ public class HebergementController {
     @Autowired
     private HebergementService hebergementService;
 
-    @PostMapping
-    public ResponseEntity<Hebergement> createHebergement(@RequestBody Hebergement hebergement) {
-        Hebergement createdHebergement = hebergementService.createHebergement(hebergement);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdHebergement);
+    @PostMapping("/{idCentre}")
+    public Hebergement createHebergement(@PathVariable Long idCentre, @RequestBody Hebergement hebergement) {
+        return hebergementService.createHebergement(idCentre, hebergement);
     }
 
     @GetMapping
@@ -45,13 +44,20 @@ public class HebergementController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteHebergement(@PathVariable Long id) {
-        boolean deleted = hebergementService.deleteHebergement(id);
-        return deleted ?
-                ResponseEntity.ok("Hebergement supprimé avec succès") :
-                ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deleteHebergement(@PathVariable Long id) {
+        boolean isDeleted = hebergementService.deleteHebergement(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    @GetMapping("/hebergement/{centreId}")
+    public ResponseEntity<List<Hebergement>> getHebergementsByCentreId(@PathVariable Long centreId) {
+        List<Hebergement> hebergements = hebergementService.findHebergementsByCentreId(centreId);
+        return ResponseEntity.ok(hebergements);
+    }
     @GetMapping("/hebergement")
     public ResponseEntity<List<Hebergement>> getAccommodationsByCentre(@RequestParam Long centreId) {
         if (centreId == null) {
@@ -60,4 +66,13 @@ public class HebergementController {
         List<Hebergement> accommodations = hebergementService.findHebergementsByCentreId(centreId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
+    @GetMapping("/centre/{centreId}/capacite/{capacite}")
+    public ResponseEntity<List<Hebergement>> getHebergementsByCentreAndCapacite(@PathVariable Long idCentre, @PathVariable int capacite) {
+        List<Hebergement> hebergements = hebergementService.findHebergementsByCentreIdAndCapacite(idCentre, capacite);
+        if (hebergements.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(hebergements, HttpStatus.OK);
+    }
+
 }

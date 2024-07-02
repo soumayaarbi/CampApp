@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://web.postman.com")
+
 @RestController
 @RequestMapping("/centresdecamping")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CentreDeCampingController {
 
     @Autowired
     private CentreDeCampingService centreDeCampingService;
 
     @PostMapping
-    public ResponseEntity<CentreDeCamping> createCentreDeCamping(@RequestBody CentreDeCamping centreDeCamping ) {
-        CentreDeCamping createdCentreDeCamping = centreDeCampingService.createCentreDeCamping(centreDeCamping);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCentreDeCamping);
+    public ResponseEntity<CentreDeCamping> createCentreDeCamping(@RequestBody CentreDeCamping centreDeCamping, @RequestParam Integer utilisateurId) {
+        CentreDeCamping newCentreDeCamping = centreDeCampingService.createCentreDeCamping(centreDeCamping, utilisateurId);
+        return new ResponseEntity<>(newCentreDeCamping, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -62,5 +63,14 @@ public class CentreDeCampingController {
     public ResponseEntity<List<CentreDeCamping>> getCentresByLieu(@PathVariable String lieu) {
         List<CentreDeCamping> centres = centreDeCampingService.findCentresDeCampingByLieu(lieu);
         return new ResponseEntity<>(centres, HttpStatus.OK);
+    }
+    @GetMapping("/centresdecamping")
+    public List<CentreDeCamping> getCentresDeCampingByUtilisateurId(@RequestParam Long utilisateurId) {
+        return centreDeCampingService.getCentresDeCampingByUtilisateurId(utilisateurId);
+    }
+    @GetMapping("/countByUtilisateur")
+    public ResponseEntity<Long> countCentresByUtilisateurId(@RequestParam Long utilisateurId) {
+        long count = centreDeCampingService.countCentresByUtilisateurId(utilisateurId);
+        return ResponseEntity.ok(count);
     }
 }

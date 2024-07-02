@@ -30,11 +30,15 @@ public class EquipementsController {
         return equipementsService.getEquipementsById(id);
     }
 
-    @PostMapping
-    public Equipements saveEquipements(@RequestBody Equipements equipements) {
-        return equipementsService.saveEquipements(equipements);
+    @PostMapping("/{idCentre}")
+    public ResponseEntity<Equipements> createEquipement(@PathVariable Long idCentre, @RequestBody Equipements equipement) {
+        Equipements createdEquipement = equipementsService.createEquipement(idCentre, equipement);
+        if (createdEquipement != null) {
+            return new ResponseEntity<>(createdEquipement, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-
     @PutMapping("/{id}")
     public Equipements updateEquipements(@PathVariable Long id, @RequestBody Equipements updatedEquipements) {
         Equipements existingEquipements = equipementsService.getEquipementsById(id);
@@ -51,7 +55,6 @@ public class EquipementsController {
     public void deleteEquipements(@PathVariable Long id) {
         equipementsService.deleteEquipements(id);
     }
-
     @GetMapping("/equipements")
     public ResponseEntity<List<Equipements>> getEquipmentsByCentre(@RequestParam Long centreId) {
         if (centreId == null) {
@@ -59,5 +62,9 @@ public class EquipementsController {
         }
         List<Equipements> equipments = equipementsService.findEquipementsByCentreDeCampingId(centreId);
         return new ResponseEntity<>(equipments, HttpStatus.OK);
+    }
+    @GetMapping("/centre/{centreId}")
+    public List<Equipements> getEquipementsByCentre(@PathVariable Long centreId) {
+        return equipementsService.findEquipementsByCentreDeCamping(centreId);
     }
 }

@@ -4,11 +4,18 @@ import com.example.campapp.dto.ReservationRequest;
 import com.example.campapp.entities.*;
 import com.example.campapp.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -28,65 +35,41 @@ public class ReservationService {
     @Autowired
     private UserRepository utilisateurRepository;
 
-    public Reservation createReservation(Date dateArrivee, Date dateSortie, int nbrPersonne, String lieu, Long idHebergement, Long idEquipement, Long idCentre, Integer idUser) {
+    public Reservation createReservation(ReservationRequest reservationDTO) {
+
+        Integer userId = reservationDTO.getUserId();
+        if (userId == null) {
+            throw new IllegalArgumentException("L'ID utilisateur est manquant.");
+        }
+
+        CentreDeCamping centre = centreDeCampingRepository.findById(reservationDTO.getIdCentre())
+                .orElseThrow(() -> new IllegalArgumentException("Centre introuvable"));
+
+        Hebergement hebergement = hebergementRepository.findById(reservationDTO.getIdHebergement())
+                .orElseThrow(() -> new IllegalArgumentException("Hébergement introuvable"));
+
+        Equipements equipement = equipementsRepository.findById(reservationDTO.getIdEquipement())
+                .orElseThrow(() -> new IllegalArgumentException("Équipement introuvable"));
+
+        User utilisateur = utilisateurRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé pour l'ID: " + userId));
+
         Reservation reservation = new Reservation();
-        reservation.setDateArivee(dateArrivee);
-        reservation.setDateSortie(dateSortie);
-        reservation.setNbrPersonne(nbrPersonne);
-        reservation.setLieux(lieu);
-
-        // Récupérer la liste des centres de camping en fonction du lieu choisi
-        List<CentreDeCamping> centresDeCamping = centreDeCampingRepository.findByLieu(lieu);
-        // Vous pouvez renvoyer cette liste de centres de camping à l'interface utilisateur pour qu'elle fasse un choix
-
-        // Une fois que l'utilisateur a choisi un centre de camping, vous pouvez récupérer cet objet CentreDeCamping
-        CentreDeCamping centreDeCamping = centreDeCampingRepository.findById(idCentre).orElse(null);
-        if (centreDeCamping == null) {
-            // Gérer le cas où le centre de camping choisi n'existe pas
-            return null;
-        }
-
-        // Récupérer l'hébergement spécifié par l'utilisateur
-        Hebergement hebergement = hebergementRepository.findById(idHebergement).orElse(null);
-        if (hebergement == null) {
-            // Gérer le cas où l'hébergement spécifié n'existe pas
-            return null;
-        }
-
-        // Vérifier si l'hébergement appartient bien au centre de camping choisi
-        if (!hebergement.getCentreDeCamping().equals(centreDeCamping)) {
-            // Gérer le cas où l'hébergement ne correspond pas au centre de camping choisi
-            return null;
-        }
-
-        // Récupérer les équipements spécifiés par l'utilisateur
-        Equipements equipement = equipementsRepository.findById(idEquipement).orElse(null);
-        if (equipement == null) {
-            // Gérer le cas où l'équipement spécifié n'existe pas
-            return null;
-        }
-
-        // Vérifier si l'équipement appartient bien au centre de camping choisi
-        if (!equipement.getCentreDeCamping().equals(centreDeCamping)) {
-            // Gérer le cas où l'équipement ne correspond pas au centre de camping choisi
-            return null;
-        }
-
-        // Récupérer l'utilisateur
-        User user = utilisateurRepository.findById(idUser).orElse(null);
-        if (user == null) {
-            // Gérer le cas où l'utilisateur n'existe pas
-            return null;
-        }
-        reservation.setUtilisateur(user);
-
-        // Définir le centre de camping, l'hébergement et les équipements dans la réservation
-        reservation.setCentreDeCamping(centreDeCamping);
+        reservation.setDateArrivee(reservationDTO.getDateArrivee());
+        reservation.setDateSortie(reservationDTO.getDateSortie());
+        reservation.setNbrPersonne(reservationDTO.getNbrPersonne());
+        reservation.setLieux(reservationDTO.getLieux());
+        reservation.setCentreDeCamping(centre);
         reservation.setHebergement(hebergement);
         reservation.setEquipement(equipement);
+        reservation.setStatus("pending");
+        reservation.setUtilisateur(utilisateur);
 
         return reservationRepository.save(reservation);
     }
+
+
+
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -164,11 +147,81 @@ public class ReservationService {
 
         reservationRepository.delete(reservation);
     }
+    public void updateReservationDates(Long reservationId, Date dateArrivee, Date dateSortie) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + reservationId));
+        reservation.setDateArrivee(dateArrivee);
+        reservation.setDateSortie(dateSortie);
+        reservationRepository.save(reservation);
+    }
+
     public void updateReservationStatus(Long reservationId, String status) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + reservationId));
         reservation.setStatus(status);
         reservationRepository.save(reservation);
+    }
+    public Long getCentreWithMostReservations() {
+        List<Reservation> allReservations = reservationRepository.findAll();
+
+        // Comptage des réservations par centre
+        Map<Long, Long> reservationCountByCentre = allReservations.stream()
+                .collect(Collectors.groupingBy(reservation -> reservation.getCentreDeCamping().getIdCentre(), Collectors.counting()));
+
+        // Trouver l'ID du centre avec le plus de réservations
+        return reservationCountByCentre.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+
+    public Map<String, Double> getReservationPercentagesByCentre() {
+        List<Reservation> allReservations = reservationRepository.findAll();
+
+        long totalReservations = allReservations.size();
+
+        return allReservations.stream()
+                .collect(Collectors.groupingBy(
+                        reservation -> reservation.getCentreDeCamping().getNom(), // Utiliser le nom du centre comme clé
+                        Collectors.counting()
+                ))
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> (entry.getValue() * 100.0) / totalReservations
+                ));
+    }
+    public List<Reservation> getRecentReservations(Long centreId) {
+        return reservationRepository.findTop5ByCentreDeCamping_IdCentreOrderByDateArriveeDesc(centreId);
+    }
+    @Transactional
+    public void acceptReservation(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + reservationId));
+
+        if (!("pending".equals(reservation.getStatus()) || reservation.getStatus() == null)) {
+            throw new IllegalStateException("Cannot accept reservation with status other than 'pending' or null.");
+        }
+
+        reservation.setStatus("accepted");
+        reservationRepository.save(reservation);
+    }
+
+    @Transactional
+    public void rejectReservation(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + reservationId));
+
+        if (!("pending".equals(reservation.getStatus()) || reservation.getStatus() == null)) {
+            throw new IllegalStateException("Cannot reject reservation with status other than 'pending' or null.");
+        }
+
+        reservation.setStatus("rejected");
+        reservationRepository.save(reservation);
+    }
+    public long countReservationsByCentreId(Long idCentre) {
+        return reservationRepository.countByCentreDeCampingIdCentre(idCentre);
     }
 
 }

@@ -43,7 +43,11 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/login/**","/register/**","/updateProfile/**","/reservations/**","/centresdecamping/**","/hebergements/**","/equipements/**")
+                        req->req.requestMatchers("/login/**","/register/**","/updateProfile/**","/reservations/**","/centresdecamping/**","/hebergements/**","/equipements/**","/reset-password/**", "/api/reclamations/**",
+                                        "/api/reponses/**",
+                                        "/api/activites/**",
+                                        "/api/forums/**",
+                                        "/api/feedbacks/**","/stat/**")
                                 .permitAll()
                                 .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
                                 .anyRequest()

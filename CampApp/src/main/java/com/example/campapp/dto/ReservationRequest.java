@@ -11,7 +11,8 @@ public class ReservationRequest {
     private Long idHebergement;
     private Long idEquipement;
     private Long idCentre;
-    private Integer id;
+    private Integer userId;
+
 
     // Getters and Setters
     public Long getIdReservation() {
@@ -78,11 +79,16 @@ public class ReservationRequest {
         this.idCentre = idCentre;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
+
+    public Integer getUser() {
+        return userId;
+    }
+
 }

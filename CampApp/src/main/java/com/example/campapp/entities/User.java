@@ -1,5 +1,6 @@
 package com.example.campapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -116,6 +117,10 @@ public class User implements UserDetails {
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
+   @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<Reservation> reservations;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Feedback> feedbacks;
 }

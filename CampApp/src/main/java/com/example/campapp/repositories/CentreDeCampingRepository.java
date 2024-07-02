@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CentreDeCampingRepository extends JpaRepository<CentreDeCamping, Long> {
     List<CentreDeCamping> findByLieu(String lieu);
+    List<CentreDeCamping> findByUtilisateurId(Long utilisateurId);
+    long countByUtilisateurId(Long utilisateurId);
 }

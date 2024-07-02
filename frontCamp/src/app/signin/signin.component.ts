@@ -47,7 +47,7 @@ export class SigninComponent {
             case 'CAMPEUR':
               this.router.navigate(['/main']);
               break;
-            case 'RESPONSABLE':
+            case 'RESPENSABLECENTRE':
               this.router.navigate(['/mainresponsable']);
               break;
             default:

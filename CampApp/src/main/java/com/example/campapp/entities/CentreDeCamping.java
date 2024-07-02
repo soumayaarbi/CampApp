@@ -20,6 +20,14 @@ public class CentreDeCamping implements Serializable {
     private Long idCentre; // Clé primaire
     private String nom;
     private String lieu;
+    @Column(columnDefinition="LONGTEXT")
+    private String image;
+     // Ajout de l'attribut pour l'image
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "utilisateur_id")
+    @JsonIgnore
+    private User utilisateur;
     @JsonIgnore
     @OneToMany(mappedBy = "centreDeCamping")
     private List<Hebergement> hebergements;

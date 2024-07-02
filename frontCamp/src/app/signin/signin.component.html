@@ -14,7 +14,10 @@
           <label for="password">Password</label>
           <input type="password" id="password" placeholder="Password" [(ngModel)]="user.password" name="password" required>
         </div>
-        <p class="animation a5"><a href="#">Forgot Password</a></p>
+        <!-- login.component.html -->
+
+<p class="animation a5"><a [routerLink]="['/reset-password']">Forgot Password</a></p>
+
         <div class="form-field animation a6">
           <button type="submit">LOGIN</button>
         </div>
